@@ -14,9 +14,9 @@ class Expenselist extends StatefulWidget {
 
 class _ExpenselistState extends State<Expenselist> {
   List<Expenses> expenses = [
-    Expenses(name:'Electric bill', description: 'Bayad kay Batelec', cost: 1000),
-    Expenses(name: 'Internet bill', description: 'Bayad kay GLobe', cost: 1000),
-    Expenses(name: 'Shoppee', description: 'dasurv na things', cost: 1000),
+    Expenses(name:'Electric bill', description: 'Bayad kay Batelec', cost: 1000, category: 'Needs'),
+    Expenses(name: 'Internet bill', description: 'Bayad kay GLobe', cost: 1000, category: 'Needs'),
+    Expenses(name: 'Shoppee', description: 'dasurv na things', cost: 1000, category: 'Wants'),
   ];
 
   @override
@@ -52,8 +52,8 @@ class _ExpenselistState extends State<Expenselist> {
           margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: TabBarView(
               children: [
-                NeedsExpenseList(),
-                WantsExpenseList()
+                NeedsExpenseList(needs: expenses.where((i) => i.category == 'Needs').toList()),
+                WantsExpenseList(wants: expenses.where((i) => i.category == 'Wants').toList())
               ]
           ),
         ),

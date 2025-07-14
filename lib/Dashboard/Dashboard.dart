@@ -48,17 +48,21 @@ class _DashboardState extends State<Dashboard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ExpenseDashboardCard(
-                    category: 'Needs',
-                    amount: 10000,
-                    percentage: 50,
-                    color: Colors.yellow[800],
+                  Expanded(
+                    child: ExpenseDashboardCard(
+                      category: 'Needs',
+                      amount: 10000,
+                      percentage: 50,
+                      color: Colors.yellow[800],
+                    ),
                   ),
-                  ExpenseDashboardCard(
-                    category: 'Wants',
-                    amount: 5000,
-                    percentage: 30,
-                    color: Colors.red[500],
+                  Expanded(
+                    child: ExpenseDashboardCard(
+                      category: 'Wants',
+                      amount: 5000,
+                      percentage: 30,
+                      color: Colors.red[500],
+                    ),
                   ),
                 ],
               ),
