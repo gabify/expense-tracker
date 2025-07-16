@@ -11,8 +11,15 @@ class ExpenseDashboardCard extends StatelessWidget {
     required this.category,
     required this.amount,
     required this.percentage,
-    required this.color
-  });
+  }){
+    if(amount <= 1000.0 && amount >= 500.0){
+      color = Colors.yellow[800];
+    } else if(amount < 500.0){
+      color = Colors.red[500];
+    }else{
+      color = Colors.green[500];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

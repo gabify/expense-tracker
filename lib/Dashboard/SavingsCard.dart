@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SavingsCard extends StatelessWidget {
-  const SavingsCard({super.key});
+  final double amount;
+  Color? color;
+
+  SavingsCard({super.key, required this.amount}){
+    if(amount <= 1000.0 && amount >= 500.0){
+      color = Colors.yellow[800];
+    } else if(amount < 500.0){
+      color = Colors.red[500];
+    }else{
+      color = Colors.green[500];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +53,11 @@ class SavingsCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        'P 1,000.00',
+                        'P $amount',
                         style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            color: color
                         ),
                       ),
                     ],

@@ -1,10 +1,22 @@
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class BudgetCard extends StatelessWidget {
+class BudgetCard extends StatefulWidget {
   const BudgetCard({super.key});
 
   @override
+  State<BudgetCard> createState() => _BudgetCardState();
+}
+
+class _BudgetCardState extends State<BudgetCard> {
+
+  final TextEditingController _controller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    final budget = context.watch<BudgetProvider>().budget;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -31,7 +43,7 @@ class BudgetCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'P 20,000.00',
+                  'P ${budget.total.toString()}',
                   style: TextStyle(
                       fontSize: 27,
                       fontWeight: FontWeight.bold
@@ -52,14 +64,52 @@ class BudgetCard extends StatelessWidget {
               children: [
                 Text('Some text to add later'),
                 ElevatedButton(
-                  onPressed: (){},
-                  child: Row(
-                    children: [
-                      Icon(Icons.create),
-                      SizedBox(width: 4.8,),
-                      Text('Edit Budget')
-                    ],
-                  ),
+                  onPressed: () async{
+                    final result = await showDialog(
+                        context: context,
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                            title: const Text('Edit your budget:'),
+                            content: TextField(
+                              controller: _controller,
+                              keyboardType: TextInputType.number,
+                              autofocus: true,
+                              decoration: const InputDecoration(
+                                  hintText: "Enter new budget"
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        color: Colors.teal
+                                      ),
+                                  )
+                              ),
+                              TextButton(
+                                  onPressed: (){
+                                    Navigator.pop(context, _controller);
+                                  },
+                                  child: Text(
+                                    'Save',
+                                    style: TextStyle(
+                                        color: Colors.teal
+                                    ),
+                                  )
+                              )
+                            ],
+                          );
+                        }
+                    );
+
+                    if(result != null && result.value.text.isNotEmpty){
+                      context.read<BudgetProvider>().addBudget(double.parse(result.value.text.trim()));
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal[800],
                       foregroundColor: Colors.white,
@@ -69,6 +119,13 @@ class BudgetCard extends StatelessWidget {
                               bottom: Radius.circular(7)
                           )
                       )
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.create),
+                      SizedBox(width: 4.8,),
+                      Text('Edit Budget')
+                    ],
                   ),
                 )
               ],

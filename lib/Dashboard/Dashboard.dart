@@ -1,7 +1,9 @@
 import 'package:expense_tracker/Dashboard/BudgetCard.dart';
 import 'package:expense_tracker/Dashboard/ExpenseDashboardCard.dart';
 import 'package:expense_tracker/Dashboard/SavingsCard.dart';
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -14,6 +16,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final budget = context.watch<BudgetProvider>().budget;
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -51,22 +55,20 @@ class _DashboardState extends State<Dashboard> {
                   Expanded(
                     child: ExpenseDashboardCard(
                       category: 'Needs',
-                      amount: 10000,
+                      amount: budget.needs,
                       percentage: 50,
-                      color: Colors.yellow[800],
                     ),
                   ),
                   Expanded(
                     child: ExpenseDashboardCard(
                       category: 'Wants',
-                      amount: 5000,
+                      amount: budget.wants,
                       percentage: 30,
-                      color: Colors.red[500],
                     ),
                   ),
                 ],
               ),
-              SavingsCard(),
+              SavingsCard(amount: budget.savings,),
             ],
           ),
         ),

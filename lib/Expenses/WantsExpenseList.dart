@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'ExpenseCard.dart';
-import 'expenses.dart';
+import '../Services/expenses.dart';
 
 class WantsExpenseList extends StatefulWidget {
   final List<Expenses> wants;

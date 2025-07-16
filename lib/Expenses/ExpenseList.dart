@@ -3,7 +3,7 @@ import 'package:expense_tracker/Expenses/WantsExpenseList.dart';
 import 'package:flutter/material.dart';
 
 import 'ExpenseCard.dart';
-import 'expenses.dart';
+import '../Services/expenses.dart';
 
 class Expenselist extends StatefulWidget {
   const Expenselist({super.key});
