@@ -1,5 +1,8 @@
+import 'package:expense_tracker/Services/Budget.dart';
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:expense_tracker/Services/expenses.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Addexpense extends StatefulWidget {
   const Addexpense({super.key});
@@ -18,6 +21,8 @@ class _AddexpenseState extends State<Addexpense> {
 
   @override
   Widget build(BuildContext context) {
+    final budget = context.watch<BudgetProvider>().budget;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[50],
@@ -83,7 +88,7 @@ class _AddexpenseState extends State<Addexpense> {
 
                       return null;
                     },
-                    onSaved: (value) => _name,
+                    onSaved: (value) => _name = value!,
                   ),
 
                   SizedBox(height: 25,),
@@ -136,9 +141,7 @@ class _AddexpenseState extends State<Addexpense> {
                         return '*Only numeric values are allowed.';
                       }
                     },
-                    onSaved: (value){
-                      _cost = double.parse(value!);
-                    },
+                    onSaved: (value) => _cost = double.parse(value!),
                   ),
 
                   SizedBox(height: 25,),
@@ -177,7 +180,7 @@ class _AddexpenseState extends State<Addexpense> {
 
                       return null;
                     },
-                    onSaved: (value) => _description,
+                    onSaved: (value) => _description = value!,
                   ),
 
                   SizedBox(height: 25,),
@@ -243,14 +246,47 @@ class _AddexpenseState extends State<Addexpense> {
                             if(_formKey.currentState!.validate()){
                               _formKey.currentState!.save();
 
-                              Expenses expense = Expenses(
-                                name: _name,
-                                description: _description,
-                                cost: _cost,
-                                category: _category
-                              );
+                              if(_category == 'Needs'){
+                                if(_cost > budget.needs){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('The cost exceeds the allocated budget for needs!'),
+                                      backgroundColor: Colors.red[800],
+                                    )
+                                  );
+                                }else{
+                                  Expenses expense = Expenses(
+                                      name: _name,
+                                      description: _description,
+                                      cost: _cost,
+                                      category: _category
+                                  );
 
-                              print(expense);
+                                  context.read<BudgetProvider>().addExpense(expense);
+
+                                  Navigator.pop(context);
+                                }
+                              }else if(_category == 'Wants'){
+                                if(_cost > budget.wants){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('The cost exceeds the allocated budget for wants!'),
+                                      backgroundColor: Colors.red[800],
+                                    )
+                                  );
+                                }else{
+                                  Expenses expense = Expenses(
+                                      name: _name,
+                                      description: _description,
+                                      cost: _cost,
+                                      category: _category
+                                  );
+
+                                  context.read<BudgetProvider>().addExpense(expense);
+
+                                  Navigator.pop(context);
+                                }
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(

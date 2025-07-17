@@ -1,9 +1,29 @@
 import 'package:expense_tracker/Services/Budget.dart';
+import 'package:expense_tracker/Services/DatabaseHelper.dart';
+import 'package:expense_tracker/Services/expenses.dart';
 import 'package:flutter/cupertino.dart';
 
 class BudgetProvider extends ChangeNotifier{
   final _budget = Budget();
+  List<Expenses> _expenses = [];
 
+  //Load expenses from db
+  Future<void> loadExpenses() async{
+    final data = await DatabaseHelper().getAllExpenses();
+    _expenses = data.map((e) => Expenses.fromMap(e)).toList();
+    notifyListeners();
+  }
+
+  //Add expenses
+  Future<void> addExpense(Expenses expense) async{
+    _expenses.add(expense);
+    notifyListeners();
+
+    await DatabaseHelper().insertExpense(expense.toMap());
+  }
+
+  //Getters
+  List<Expenses> get expenses => List.unmodifiable(_expenses);
   Budget get budget => _budget;
 
   void addBudget(double total){

@@ -17,6 +17,13 @@ class _NeedsExpenseListState extends State<NeedsExpenseList> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.needs.isEmpty){
+      return Center(
+        child: Text('Nothing to see here.'),
+      );
+    }
+
     return Column(
       children: widget.needs.map((expense){
         return ExpenseCard(expense: expense);

@@ -1,6 +1,8 @@
 import 'package:expense_tracker/Expenses/NeedsExpenseList.dart';
 import 'package:expense_tracker/Expenses/WantsExpenseList.dart';
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'ExpenseCard.dart';
 import '../Services/expenses.dart';
@@ -13,14 +15,11 @@ class Expenselist extends StatefulWidget {
 }
 
 class _ExpenselistState extends State<Expenselist> {
-  List<Expenses> expenses = [
-    Expenses(name:'Electric bill', description: 'Bayad kay Batelec', cost: 1000, category: 'Needs'),
-    Expenses(name: 'Internet bill', description: 'Bayad kay GLobe', cost: 1000, category: 'Needs'),
-    Expenses(name: 'Shoppee', description: 'dasurv na things', cost: 1000, category: 'Wants'),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final expenses = context.watch<BudgetProvider>().expenses;
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
