@@ -107,7 +107,10 @@ class _BudgetCardState extends State<BudgetCard> {
                     );
 
                     if(result != null && result.value.text.isNotEmpty){
-                      context.read<BudgetProvider>().addBudget(double.parse(result.value.text.trim()));
+                      context.read<BudgetProvider>().addBudget(
+                          double.parse(result.value.text.trim()),
+                          DateTime.now.toString()
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(

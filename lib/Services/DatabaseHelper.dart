@@ -13,7 +13,7 @@ class DatabaseHelper{
   Future<Database> get database async{
     if(_db != null) return _db!;
 
-    _db = await _initDB('expense_tracker_1.db');
+    _db = await _initDB('expense_tracker_2.db');
     return _db!;
   }
 
@@ -38,6 +38,14 @@ class DatabaseHelper{
         category TEXT
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE budget (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        total REAL,
+        created_at TEXT
+      )
+    ''');
   }
 
   Future<int> insertExpense(Map<String, dynamic> expense) async{
@@ -45,8 +53,18 @@ class DatabaseHelper{
     return await db.insert('expenses', expense);
   }
 
+  Future<int> insertBudget(Map<String, dynamic> budget) async{
+    final db = await database;
+    return await db.insert('budget', budget);
+  }
+
   Future<List<Map<String, dynamic>>> getAllExpenses() async{
     final db = await database;
     return await  db.query('expenses');
+  }
+
+  Future<List<Map<String, dynamic>>> getCurrentBudget() async{
+    final db = await database;
+    return await  db.rawQuery('''SELECT * FROM budget ORDER BY id DESC LIMIT 1''');
   }
 }

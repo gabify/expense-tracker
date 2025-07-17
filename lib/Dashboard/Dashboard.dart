@@ -19,6 +19,7 @@ class _DashboardState extends State<Dashboard> {
     // TODO: implement initState
     super.initState();
     Future.microtask(() => context.read<BudgetProvider>().loadExpenses());
+    Future.microtask(() => context.read<BudgetProvider>().loadBudget());
   }
   
   @override
