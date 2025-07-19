@@ -37,10 +37,17 @@ class Budget {
     );
   }
 
+  //getters
   double get total => _total;
   double get needs => _needs;
   double get wants => _wants;
   double get savings => _savings;
   String get created_at => _created_at;
+  bool get isEmpty => _id == null && _total == 0.0 && _created_at == '';
+  bool get isNotEmpty => !isEmpty;
+
+  //setters
+  set setNeeds(double needs) => _needs = needs;
+  set setWants(double wants) => _wants = wants;
 
 }
