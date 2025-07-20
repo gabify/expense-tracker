@@ -1,5 +1,7 @@
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:expense_tracker/Services/expenses.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseCard extends StatelessWidget {
   
@@ -41,7 +43,7 @@ class ExpenseCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '- ₱${expense.cost.toString()}',
+                  '- ${context.read<BudgetProvider>().formatCurrency(expense.cost)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

@@ -1,4 +1,6 @@
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseDashboardCard extends StatelessWidget {
   final String category;
@@ -48,7 +50,7 @@ class ExpenseDashboardCard extends StatelessWidget {
             ),
 
             Text(
-              'P ${amount}',
+              context.read<BudgetProvider>().formatCurrency(amount),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,

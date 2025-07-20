@@ -1,6 +1,7 @@
 import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:expense_tracker/Services/InAppNotifier.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BudgetCard extends StatefulWidget {
@@ -32,7 +33,7 @@ class _BudgetCardState extends State<BudgetCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'As of July 2025',
+              'As of ${DateFormat('MMMM yyyy').format(DateTime.now())}',
               style: TextStyle(
                   color: Colors.black87,
                   fontSize: 16,
@@ -44,7 +45,7 @@ class _BudgetCardState extends State<BudgetCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'P ${budget.total.toString()}',
+                  context.read<BudgetProvider>().formatCurrency(budget.total),
                   style: TextStyle(
                       fontSize: 27,
                       fontWeight: FontWeight.bold

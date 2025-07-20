@@ -3,6 +3,7 @@ import 'package:expense_tracker/Services/DatabaseHelper.dart';
 import 'package:expense_tracker/Services/expenses.dart';
 import 'package:expense_tracker/Services/savings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class BudgetProvider extends ChangeNotifier{
   final _budget = Budget(0, 0.0, '');
@@ -91,6 +92,12 @@ class BudgetProvider extends ChangeNotifier{
       //return now.isAfter(fakeDate);
     }
     return false;
+  }
+
+  //Currency formatter function
+  String formatCurrency(double amount){
+    final formatter = NumberFormat.currency(locale: 'en_PH', symbol: '₱');
+    return formatter.format(amount);
   }
 
 }

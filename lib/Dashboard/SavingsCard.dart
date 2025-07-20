@@ -1,5 +1,6 @@
 import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SavingsCard extends StatelessWidget {
@@ -56,7 +57,7 @@ class SavingsCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        'P $amount',
+                        context.read<BudgetProvider>().formatCurrency(amount),
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -70,14 +71,14 @@ class SavingsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'P ${totalSavings}',
+                        context.read<BudgetProvider>().formatCurrency(totalSavings),
                         style: TextStyle(
                             fontSize: 27,
                             fontWeight: FontWeight.bold
                         ),
                       ),
                       Text(
-                        'Your total savings as of July',
+                        'Your total savings as of ${DateFormat('MMMM').format(DateTime.now())}',
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 14,

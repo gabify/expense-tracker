@@ -52,14 +52,14 @@ class SavingsDashboard extends StatelessWidget {
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      'P ${totalSavings}',
+                      context.read<BudgetProvider>().formatCurrency(totalSavings),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'of P 1,000,000.00',
+                      'of ${context.read<BudgetProvider>().formatCurrency(1000000)}',
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.grey[600],
