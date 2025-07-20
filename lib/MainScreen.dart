@@ -1,5 +1,8 @@
 import 'package:expense_tracker/Savings/SavingsDashboard.dart';
+import 'package:expense_tracker/Services/BudgetProvider.dart';
+import 'package:expense_tracker/Services/InAppNotifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'Expenses/ExpenseList.dart';
 import 'Dashboard/Dashboard.dart';
@@ -24,6 +27,40 @@ class _MainScreenState extends State<MainScreen> {
     Expenselist(),
     SavingsDashboard()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      await _initData();
+      _isBudgetExpired();
+    });
+  }
+
+  Future<void> _initData() async{
+    await context.read<BudgetProvider>().loadExpenses();
+    await context.read<BudgetProvider>().loadBudget();
+    await context.read<BudgetProvider>().loadSavings();
+  }
+
+  void _isBudgetExpired() {
+    if(context.read<BudgetProvider>().checkBudget()){
+      showDialog(
+        context: context,
+        builder: (_) => InAppNotifier(
+            title: Text('Alert'),
+            content: Text('You may need to add a new budget for this month'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('ok')
+              )
+            ]
+        )
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

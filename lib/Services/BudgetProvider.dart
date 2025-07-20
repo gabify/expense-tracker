@@ -78,4 +78,19 @@ class BudgetProvider extends ChangeNotifier{
     }
   }
 
+  //check if the budget is past 1 month
+  bool checkBudget(){
+    if(_budget.isNotEmpty){
+      final created = DateTime.parse(_budget.created_at);
+      final now = DateTime.now();
+      final oneMonthLater = DateTime(created.year, created.month + 1, created.day);
+      return now.isAfter(oneMonthLater);
+
+      //This is for testing
+      //final fakeDate = DateTime.now().subtract(Duration(days: 31));
+      //return now.isAfter(fakeDate);
+    }
+    return false;
+  }
+
 }

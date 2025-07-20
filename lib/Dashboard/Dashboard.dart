@@ -13,21 +13,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      _initData();
-    });
-  }
-
-  Future<void> _initData() async{
-    await context.read<BudgetProvider>().loadExpenses();
-    await context.read<BudgetProvider>().loadBudget();
-    await context.read<BudgetProvider>().loadSavings();
-  }
   
   @override
   Widget build(BuildContext context) {

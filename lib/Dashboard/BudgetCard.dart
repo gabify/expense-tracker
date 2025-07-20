@@ -1,4 +1,5 @@
 import 'package:expense_tracker/Services/BudgetProvider.dart';
+import 'package:expense_tracker/Services/InAppNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,41 +68,41 @@ class _BudgetCardState extends State<BudgetCard> {
                   onPressed: () async{
                     final result = await showDialog(
                         context: context,
-                        builder: (BuildContext context){
-                          return AlertDialog(
-                            title: const Text('Edit your budget:'),
-                            content: TextField(
-                              controller: _controller,
-                              keyboardType: TextInputType.number,
-                              autofocus: true,
-                              decoration: const InputDecoration(
-                                  hintText: "Enter new budget"
+                        builder : (BuildContext context){
+                          return InAppNotifier(
+                              title: const Text('Edit your budget:'),
+                              content: TextField(
+                                controller: _controller,
+                                keyboardType: TextInputType.number,
+                                autofocus: true,
+                                decoration: const InputDecoration(
+                                    hintText: "Enter new budget"
+                                ),
                               ),
-                            ),
-                            actions: [
-                              TextButton(
-                                  onPressed: (){
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
+                              actions: [
+                                TextButton(
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
                                       'Cancel',
                                       style: TextStyle(
-                                        color: Colors.teal
+                                          color: Colors.teal
                                       ),
-                                  )
-                              ),
-                              TextButton(
-                                  onPressed: (){
-                                    Navigator.pop(context, _controller);
-                                  },
-                                  child: Text(
-                                    'Save',
-                                    style: TextStyle(
-                                        color: Colors.teal
-                                    ),
-                                  )
-                              )
-                            ],
+                                    )
+                                ),
+                                TextButton(
+                                    onPressed: (){
+                                      Navigator.pop(context, _controller);
+                                    },
+                                    child: Text(
+                                      'Save',
+                                      style: TextStyle(
+                                          color: Colors.teal
+                                      ),
+                                    )
+                                )
+                              ],
                           );
                         }
                     );
