@@ -1,4 +1,4 @@
-import 'package:expense_tracker/Savings/Savings.dart';
+import 'package:expense_tracker/Savings/SavingsDashboard.dart';
 import 'package:flutter/material.dart';
 
 import 'Expenses/ExpenseList.dart';
@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = <Widget>[
     Dashboard(),
     Expenselist(),
-    Savings()
+    SavingsDashboard()
   ];
 
   @override

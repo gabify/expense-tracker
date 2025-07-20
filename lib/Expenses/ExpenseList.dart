@@ -26,12 +26,23 @@ class _ExpenselistState extends State<Expenselist> {
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
           backgroundColor: Colors.grey[50],
-          title: Text(
-            'My Expenses',
-            style: TextStyle(
+          title: Container(
+            padding: EdgeInsets.only(bottom: 1),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.teal,
+                        width: 2
+                    )
+                )
+            ),
+            child: Text(
+              'My Expenses',
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
-                letterSpacing: 0.8
+                letterSpacing: 0.8,
+              ),
             ),
           ),
           bottom: TabBar(

@@ -1,11 +1,13 @@
 import 'package:expense_tracker/Services/Budget.dart';
 import 'package:expense_tracker/Services/DatabaseHelper.dart';
 import 'package:expense_tracker/Services/expenses.dart';
+import 'package:expense_tracker/Services/savings.dart';
 import 'package:flutter/cupertino.dart';
 
 class BudgetProvider extends ChangeNotifier{
   final _budget = Budget(0, 0.0, '');
   List<Expenses> _expenses = [];
+  List<Savings> _savings = [];
 
   //Load expenses from db
   Future<void> loadExpenses() async{
@@ -15,12 +17,23 @@ class BudgetProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  //Load budget
+  //Load budget from db
   Future<void> loadBudget() async{
     final data = await DatabaseHelper().getCurrentBudget();
     final budget = Budget.fromMap(data.first);
-    _budget.addBudget(budget.total, budget.created_at);
-    _recalculate();
+
+    if(budget.isNotEmpty) {
+      _budget.addBudget(budget.total, budget.created_at);
+      _recalculate();
+    }
+
+    notifyListeners();
+  }
+
+  //load savings from db
+  Future<void> loadSavings() async{
+    final data = await DatabaseHelper().getAllBudget();
+    _savings = data.map((e) => Savings.fromMap(e)).toList();
 
     notifyListeners();
   }
@@ -36,6 +49,7 @@ class BudgetProvider extends ChangeNotifier{
 
   //Getters
   List<Expenses> get expenses => List.unmodifiable(_expenses);
+  List<Savings> get savings => List.unmodifiable(_savings);
   Budget get budget => _budget;
   double get totalNeedsCost => _expenses
       .where((i) => i.category == 'Needs')
@@ -43,11 +57,14 @@ class BudgetProvider extends ChangeNotifier{
   double get totalWantsCost => _expenses
       .where((i) => i.category == 'Wants')
       .fold<double>(0.0, (sum, next) => sum + next.cost);
+  double get totalSavings => _savings
+      .fold<double>(0.0, ((sum, next) => sum + next.amount));
 
 
   //Add budget
   Future<void> addBudget(double total, String created_at) async{
     _budget.addBudget(total, created_at);
+    _savings.add(Savings(amount: total * 0.2, date: created_at));
     notifyListeners();
 
     await DatabaseHelper().insertBudget(_budget.toMap());

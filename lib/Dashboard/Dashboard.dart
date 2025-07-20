@@ -18,8 +18,15 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.microtask(() => context.read<BudgetProvider>().loadExpenses());
-    Future.microtask(() => context.read<BudgetProvider>().loadBudget());
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _initData();
+    });
+  }
+
+  Future<void> _initData() async{
+    await context.read<BudgetProvider>().loadExpenses();
+    await context.read<BudgetProvider>().loadBudget();
+    await context.read<BudgetProvider>().loadSavings();
   }
   
   @override

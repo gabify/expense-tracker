@@ -13,7 +13,7 @@ class DatabaseHelper{
   Future<Database> get database async{
     if(_db != null) return _db!;
 
-    _db = await _initDB('expense_tracker_2.db');
+    _db = await _initDB('expense_tracker_3.db');
     return _db!;
   }
 
@@ -66,5 +66,10 @@ class DatabaseHelper{
   Future<List<Map<String, dynamic>>> getCurrentBudget() async{
     final db = await database;
     return await  db.rawQuery('''SELECT * FROM budget ORDER BY id DESC LIMIT 1''');
+  }
+
+  Future <List<Map<String, dynamic>>> getAllBudget() async{
+    final db = await database;
+    return await db.query('budget');
   }
 }

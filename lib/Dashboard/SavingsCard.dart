@@ -1,4 +1,6 @@
+import 'package:expense_tracker/Services/BudgetProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SavingsCard extends StatelessWidget {
   final double amount;
@@ -16,6 +18,7 @@ class SavingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final totalSavings = context.watch<BudgetProvider>().totalSavings;
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -67,7 +70,7 @@ class SavingsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'P 50,000.00',
+                        'P ${totalSavings}',
                         style: TextStyle(
                             fontSize: 27,
                             fontWeight: FontWeight.bold
