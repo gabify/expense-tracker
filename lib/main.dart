@@ -13,6 +13,28 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => BudgetProvider(),
       child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.grey[50],
+          cardTheme: CardThemeData(
+            color: Colors.teal[100],
+            elevation: 2,
+          ),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.grey[50]
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal[800],
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusDirectional.vertical(
+                        top: Radius.circular(7),
+                        bottom: Radius.circular(7)
+                    )
+                )
+            ),
+          )
+        ),
         routes: {
           '/' : (context) => MainScreen(),
           '/add' : (context) => Addexpense(),

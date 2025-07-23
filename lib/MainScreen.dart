@@ -1,6 +1,6 @@
 import 'package:expense_tracker/Savings/SavingsDashboard.dart';
 import 'package:expense_tracker/Services/BudgetProvider.dart';
-import 'package:expense_tracker/Services/InAppNotifier.dart';
+import 'package:expense_tracker/widgets/InAppNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

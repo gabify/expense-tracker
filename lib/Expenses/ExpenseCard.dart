@@ -11,6 +11,7 @@ class ExpenseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[50],
       child: Container(
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.symmetric(vertical: 5),

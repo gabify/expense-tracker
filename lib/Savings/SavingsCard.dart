@@ -11,9 +11,10 @@ class SavingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[50],
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        margin: EdgeInsets.symmetric(vertical: 5),
+        margin: EdgeInsets.symmetric(vertical: 7),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

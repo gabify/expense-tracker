@@ -290,7 +290,6 @@ class _AddexpenseState extends State<Addexpense> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal[800],
                             minimumSize: Size(10, 50)
                           ),
                           child: Text(

@@ -24,7 +24,6 @@ class SavingsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Card(
-            color: Colors.teal[100],
             margin: EdgeInsets.symmetric(vertical: 10),
             child: Container(
               padding: EdgeInsets.all(20),

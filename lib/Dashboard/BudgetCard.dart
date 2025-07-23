@@ -1,5 +1,5 @@
 import 'package:expense_tracker/Services/BudgetProvider.dart';
-import 'package:expense_tracker/Services/InAppNotifier.dart';
+import 'package:expense_tracker/widgets/InAppNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,6 @@ class _BudgetCardState extends State<BudgetCard> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
     Card(
-    color: Colors.teal[100],
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Container(
         padding: EdgeInsets.all(20),
@@ -107,7 +106,6 @@ class _BudgetCardState extends State<BudgetCard> {
                           );
                         }
                     );
-
                     if(result != null && result.value.text.isNotEmpty){
                       context.read<BudgetProvider>().addBudget(
                           double.parse(result.value.text.trim()),
@@ -115,16 +113,6 @@ class _BudgetCardState extends State<BudgetCard> {
                       );
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal[800],
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.vertical(
-                              top: Radius.circular(7),
-                              bottom: Radius.circular(7)
-                          )
-                      )
-                  ),
                   child: Row(
                     children: [
                       Icon(Icons.create),

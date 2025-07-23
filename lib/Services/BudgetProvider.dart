@@ -42,10 +42,15 @@ class BudgetProvider extends ChangeNotifier{
   //Add expenses
   Future<void> addExpense(Expenses expense) async{
     _expenses.add(expense);
-    _recalculate();
-    notifyListeners();
+    if(expense.category == 'Needs'){
+      _recalculateNeeds(expense.cost);
+    } else if(expense.category == 'Wants'){
+      _recalculateWants(expense.cost);
+    }
 
     await DatabaseHelper().insertExpense(expense.toMap());
+
+    notifyListeners();
   }
 
   //Getters
@@ -74,9 +79,17 @@ class BudgetProvider extends ChangeNotifier{
   //recalculate the budget based on the expenses
   void _recalculate(){
     if(_budget.isNotEmpty && _expenses.isNotEmpty){
-      _budget.setNeeds = _budget.needs - totalNeedsCost;
-      _budget.setWants = _budget.wants - totalWantsCost;
+      _recalculateNeeds(totalNeedsCost);
+      _recalculateWants(totalWantsCost);
     }
+  }
+
+  void _recalculateNeeds(double amount){
+    _budget.setNeeds = _budget.needs - amount;
+  }
+
+  void _recalculateWants(double amount){
+    _budget.setWants = _budget.wants - amount;
   }
 
   //check if the budget is past 1 month
@@ -98,6 +111,15 @@ class BudgetProvider extends ChangeNotifier{
   String formatCurrency(double amount){
     final formatter = NumberFormat.currency(locale: 'en_PH', symbol: '₱');
     return formatter.format(amount);
+  }
+
+  //Icons Size calculator
+  double iconsSize(){
+    final double minSize = 20;
+    final double maxSize = 100;
+
+    double ratio = (totalSavings / 100000.0).clamp(0, 1);
+    return minSize + ratio * (maxSize - 20);
   }
 
 }

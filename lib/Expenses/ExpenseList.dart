@@ -1,6 +1,7 @@
 import 'package:expense_tracker/Expenses/NeedsExpenseList.dart';
 import 'package:expense_tracker/Expenses/WantsExpenseList.dart';
 import 'package:expense_tracker/Services/BudgetProvider.dart';
+import 'package:expense_tracker/widgets/AppbarTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,28 +24,8 @@ class _ExpenselistState extends State<Expenselist> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          backgroundColor: Colors.grey[50],
-          title: Container(
-            padding: EdgeInsets.only(bottom: 1),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        color: Colors.teal,
-                        width: 2
-                    )
-                )
-            ),
-            child: Text(
-              'My Expenses',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-                letterSpacing: 0.8,
-              ),
-            ),
-          ),
+          title: AppbarTitle(text: 'My Expenses',),
           bottom: TabBar(
             indicatorColor: Colors.teal,
             indicatorSize: TabBarIndicatorSize.tab,
