@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = <Widget>[
     Dashboard(),
     Expenselist(),
+    SavingsDashboard(),
     SavingsDashboard()
   ];
 
@@ -67,44 +68,61 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _pages.elementAt(_selected_items),
 
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){
-          Navigator.pushNamed(context, '/add');
-        },
-        label: Text(
-          'Add Expense',
-          style: TextStyle(
-              color: Colors.white
+      floatingActionButton: SizedBox(
+        height: 70,
+        width: 70,
+        child: FloatingActionButton(
+          onPressed: (){
+            Navigator.pushNamed(context, '/add');
+          },
+          backgroundColor: Colors.teal[800],
+          elevation: 1.7,
+          shape: CircleBorder(),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
           ),
         ),
-        icon: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.teal[800],
-        elevation: 1.7,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-      bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.teal[300],
-          currentIndex: _selected_items,
-          onTap: _onItemTapped,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 4.0,
+        height: 65,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: (){
+                setState(() => _selected_items = 0);
+              },
+              icon: Icon(Icons.dashboard_rounded, size: 30),
             ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.monetization_on,
-                ),
-                label: 'Expenses'
+            IconButton(
+              onPressed: (){
+                setState(() => _selected_items = 1);
+              },
+              icon: Icon(Icons.monetization_on, size: 30,),
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.savings),
-                label: 'Savings'
+
+            SizedBox(width: 30,),
+
+            IconButton(
+              onPressed: (){
+                setState(() => _selected_items = 3);
+              },
+              icon: Icon(Icons.savings, size: 30,),
             ),
-          ]
+            IconButton(
+              onPressed: (){
+                setState(() => _selected_items = 4);
+              },
+              icon: Icon(Icons.history, size: 30,),
+            ),
+          ],
+        ),
       ),
     );
   }
